@@ -1,0 +1,28 @@
+{
+  "name": "cucumberjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test.local": "wdio test/configs/wdio.local.chrome.conf.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@cucumber/gherkin": "^25.0.2",
+    "@cucumber/messages": "^20.0.0",
+    "@wdio/cli": "^7.27.0",
+    "@wdio/cucumber-framework": "^7.27.0",
+    "@wdio/local-runner": "^7.27.0",
+    "@wdio/spec-reporter": "^7.26.0",
+    "chromedriver": "^108.0.0",
+    "gherkin": "^9.0.0",
+    "multiple-cucumber-html-reporter": "^3.0.1",
+    "wdio-chromedriver-service": "^7.3.2",
+    "wdio-cucumberjs-json-reporter": "^4.4.3"
+  },
+  "dependencies": {
+    "remove": "^0.1.5"
+  }
+}
