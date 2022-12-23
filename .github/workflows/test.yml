@@ -31,4 +31,4 @@ jobs:
     - name: Install dependencies
       working-directory: ./v8/
       run: npm ci
-    - run: npm run test.local
+    - run: yarn test.local --logLevel=debug
