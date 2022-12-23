@@ -13,9 +13,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./v8/
 
     strategy:
       matrix:
@@ -29,6 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install dependencies
-      working-directory: ./v8/
+      working-directory: ./v8-js/
       run: npm ci
     - run: yarn test.local --logLevel=debug
