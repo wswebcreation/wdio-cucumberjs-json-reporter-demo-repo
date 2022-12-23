@@ -2,22 +2,21 @@
   "name": "webdriverio-tests",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "devDependencies": {
-    "@cucumber/gherkin": "^26.0.1",
-    "@cucumber/messages": "^21.0.1",
+    "@wdio/allure-reporter": "^8.0.13",
     "@wdio/cli": "^8.0.13",
     "@wdio/cucumber-framework": "^8.0.13",
     "@wdio/local-runner": "^8.0.13",
     "@wdio/spec-reporter": "^8.0.13",
     "chromedriver": "^108.0.0",
-    "gherkin": "^9.0.0",
     "multiple-cucumber-html-reporter": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4",
     "wdio-chromedriver-service": "^8.0.1"
   },
   "scripts": {
-    "test.local": "wdio test/configs/wdio.local.chrome.conf.js"
-  },
-  "dependencies": {
-    "wdio-cucumberjs-json-reporter": "^4.4.3"
+    "wdio": "wdio run wdio.conf.ts",
+    "test.local": "wdio test/configs/wdio.conf.ts"
   }
 }

@@ -1,69 +1,92 @@
-const { generate } = require('multiple-cucumber-html-reporter');
-const { removeSync } = require('fs-extra');
-const { join } = require('path');
-const { cwd } = require('process');
+import type { Options } from '@wdio/types';
+import { join } from 'path';
+import fsExtra from 'fs-extra';
+const { removeSync } = fsExtra;
+import multipleCucumberHTMLReporter from 'multiple-cucumber-html-reporter';
+const { generate } = multipleCucumberHTMLReporter;
 
-/**
- * This file holds all the shared config options
- * The rest of the files will extend options
- * More information about the config can be found
- * here https://webdriver.io/docs/configurationfile.html
- */
-exports.config = {
+console.log(
+  "join('../', 'test', 'features', '*.feature' = ",
+  join(process.cwd(), 'test', 'features', '*.feature')
+);
+
+export const config: Options.Testrunner = {
+  //
   // ====================
   // Runner Configuration
   // ====================
+  // WebdriverIO supports running e2e tests as well as unit and component tests.
   runner: 'local',
+  autoCompileOpts: {
+    tsNodeOpts: {
+      project: './tsconfig.json',
+    },
+  },
+
+  //
   // ==================
   // Specify Test Files
   // ==================
-  specs: [join(cwd(), './test/features/sample.feature')],
+  //
+  specs: [join(process.cwd(), 'test/features/*.feature')],
+  //
   // ============
   // Capabilities
   // ============
-  maxInstances: 100,
-  // capabilities can be found in the `wdio.local.chrome.conf.js` or `wdio.saucelabs.conf.js`
+  //
+  maxInstances: 10,
+  capabilities: [
+    {
+      browserName: 'chrome',
+      'goog:chromeOptions': {
+        args: ['--no-sandbox', '--disable-infobars', '--headless'],
+      },
+      'cjson:metadata': {
+        device: 'Test Device',
+        browser: {
+          name: 'safari',
+          version: '14.1',
+        },
+        platform: {
+          name: 'ios',
+          version: '14',
+        },
+      },
+    },
+  ],
+  //
   // ===================
   // Test Configurations
   // ===================
+  //
   logLevel: 'silent',
   bail: 0,
-  baseUrl: 'https://www.saucedemo.com',
+  baseUrl: 'http://localhost',
   waitforTimeout: 10000,
   connectionRetryTimeout: 120000,
-  connectionRetryCount: 3,
+  connectionRetryCount: 3, //
+  services: ['chromedriver'],
   framework: 'cucumber',
-  // Added the `cucumberjs-json`, see
-  // https://github.com/wswebcreation/wdio-cucumberjs-json-reporter
-  reporters: [
-    'spec',
-    // 'cucumberjs-json'
-  ],
-  // If you are using Cucumber you need to specify the location of your step definitions.
-  // See https://webdriver.io/docs/frameworks.html#using-cucumber for more information about the properties
+  reporters: ['spec', 'cucumberjs-json'],
   cucumberOpts: {
-    require: [join(cwd(), './test/step-definitions/*.steps.js')],
+    require: [join(process.cwd(), 'test/step-definitions/*.ts')],
     backtrace: false,
+    requireModule: [],
     dryRun: false,
     failFast: false,
-    format: ['pretty'],
     snippets: true,
     source: true,
-    profile: [],
     strict: false,
     tagExpression: '',
     timeout: 60000,
     ignoreUndefinedDefinitions: false,
   },
 
-  // ========
-  // Services
-  // ========
-  services: [],
-
+  //
   // =====
   // Hooks
   // =====
+  //
   onPrepare: () => {
     // Remove the `.tmp/` folder that holds the json and report files
     removeSync('.tmp/');
